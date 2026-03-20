@@ -489,6 +489,14 @@
 		"configuration": {
 			"title": "%configuration.title%",
 			"properties": {
+				"kilo-code.allowedProviders": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"markdownDescription": "Restrict the list of AI providers shown in the settings dropdown. Use provider IDs (e.g. `openai-compatible`, `anthropic`, `openrouter`). An empty array means all providers are shown."
+				},
 				"kilo-code.allowedCommands": {
 					"type": "array",
 					"items": {
