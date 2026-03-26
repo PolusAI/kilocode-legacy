@@ -3,7 +3,7 @@
 	"displayName": "%extension.displayName%",
 	"description": "%extension.description%",
 	"publisher": "kilocode",
-	"version": "5.10.5",
+	"version": "5.10.4-polus.1",
 	"icon": "assets/icons/logo-outline-black.png",
 	"galleryBanner": {
 		"color": "#FFFFFF",
@@ -494,7 +494,13 @@
 					"items": {
 						"type": "string"
 					},
-					"default": [],
+					"default": [
+						"openai-native",
+						"openai",
+						"gemini",
+						"anthropic",
+						"ollama"
+					],
 					"markdownDescription": "Restrict the list of AI providers shown in the settings dropdown. Use provider IDs (e.g. `openai-compatible`, `anthropic`, `openrouter`). An empty array means all providers are shown."
 				},
 				"kilo-code.allowedCommands": {
@@ -563,7 +569,7 @@
 				},
 				"kilo-code.autoImportSettingsPath": {
 					"type": "string",
-					"default": "",
+					"default": "/etc/kilo/provider-profiles.json",
 					"description": "%settings.autoImportSettingsPath.description%"
 				},
 				"kilo-code.maximumIndexedFilesForFileSearch": {
