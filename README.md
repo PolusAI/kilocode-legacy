@@ -1,3 +1,23 @@
+## PolusAI Fork — Provider Restriction
+
+This fork restricts the AI providers available in the extension UI via the `kilo-code.allowedProviders` setting. The default allowed providers are:
+
+- `openai-native` (OpenAI)
+- `openai` (OpenAI-compatible)
+- `gemini` (Google Gemini)
+- `anthropic` (Anthropic)
+- `ollama` (Ollama)
+
+**Changed files:**
+
+| File                                                | Change                                                                                                                          |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `src/package.json`                                  | Added `kilo-code.allowedProviders` and `kilo-code.autoImportSettingsPath` configuration properties with Polus-specific defaults |
+| `src/core/webview/ClineProvider.ts`                 | Reads `allowedProviders` from settings to build the organization allow list, bypassing the cloud allow-list API                 |
+| `webview-ui/src/components/settings/ApiOptions.tsx` | Filters the provider dropdown using `filterProviders()` based on the allow list                                                 |
+
+---
+
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://img.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace"></a>
   <a href="https://x.com/kilocode"><img src="https://img.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)"></a>
