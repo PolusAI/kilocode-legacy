@@ -65,7 +65,7 @@ import { useExtensionState } from "@src/context/ExtensionStateContext"
 //	OPENROUTER_DEFAULT_PROVIDER_NAME,
 //} from "@src/components/ui/hooks/useOpenRouterModelProviders"
 // kilocode_change start
-import { filterModels } from "./utils/organizationFilters"
+import { filterModels, filterProviders } from "./utils/organizationFilters"
 import {
 	Select,
 	SelectTrigger,
@@ -538,16 +538,14 @@ const ApiOptions = ({
 		}
 	}, [selectedProvider])
 
-	// Convert providers to SearchableSelect options
-	// kilocode_change start: no organizationAllowList
 	const providerOptions = useMemo(
 		() =>
-			PROVIDERS.map(({ value, label }) => {
-				return { value, label }
-			}),
-		[],
+			filterProviders(
+				PROVIDERS.map(({ value, label }) => ({ value, label })),
+				organizationAllowList,
+			),
+		[organizationAllowList],
 	)
-	// kilocode_change end
 
 	return (
 		<div className="flex flex-col gap-3">

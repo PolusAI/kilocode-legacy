@@ -45,6 +45,7 @@ import {
 	DEFAULT_TERMINAL_OUTPUT_CHARACTER_LIMIT,
 	DEFAULT_WRITE_DELAY_MS,
 	ORGANIZATION_ALLOW_ALL,
+	type OrganizationAllowList,
 	DEFAULT_MODES,
 	DEFAULT_CHECKPOINT_TIMEOUT_SECONDS,
 	getModelId,
@@ -2612,14 +2613,25 @@ export class ClineProvider
 			providerSettings.apiProvider = apiProvider
 		}
 
-		let organizationAllowList = ORGANIZATION_ALLOW_ALL
+		let organizationAllowList: OrganizationAllowList = ORGANIZATION_ALLOW_ALL
 
-		try {
-			organizationAllowList = await CloudService.instance.getAllowList()
-		} catch (error) {
-			console.error(
-				`[getState] failed to get organization allow list: ${error instanceof Error ? error.message : String(error)}`,
-			)
+		const allowedProviders: string[] = vscode.workspace
+			.getConfiguration("kilo-code")
+			.get<string[]>("allowedProviders", [])
+
+		if (allowedProviders.length > 0) {
+			organizationAllowList = {
+				allowAll: false,
+				providers: Object.fromEntries(allowedProviders.map((p) => [p, { allowAll: true }])),
+			}
+		} else {
+			try {
+				organizationAllowList = await CloudService.instance.getAllowList()
+			} catch (error) {
+				console.error(
+					`[getState] failed to get organization allow list: ${error instanceof Error ? error.message : String(error)}`,
+				)
+			}
 		}
 
 		let cloudUserInfo: CloudUserInfo | null = null
